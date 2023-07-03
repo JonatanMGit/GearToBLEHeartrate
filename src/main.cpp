@@ -64,6 +64,7 @@ void serverLoop()
   {
     return;
   }
+
   // Wait until the client sends some data
   // Serial.println("new client");
 
@@ -102,6 +103,11 @@ void serverLoop()
   if (success == 0)
   {
     Serial.println("Failed to update heart rate characteristic");
+    client.println("HTTP/1.1 500 Internal Server Error");
+    client.println("Connection: close");
+    client.println();
+    client.stop();
+    return;
   }
   Serial.print("rate:");
   Serial.println(rate);
